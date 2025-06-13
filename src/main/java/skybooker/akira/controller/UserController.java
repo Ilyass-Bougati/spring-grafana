@@ -4,29 +4,27 @@ import io.micrometer.observation.annotation.Observed;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import skybooker.akira.entity.User;
+import skybooker.akira.service.CustomMetricsService;
 import skybooker.akira.service.UserService;
 
 @RestController
+@RequestMapping("/user")
 public class UserController {
     Logger logger = LoggerFactory.getLogger(UserController.class);
     private final UserService userService;
+    private final CustomMetricsService customMetricsService;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, CustomMetricsService customMetricsService) {
         this.userService = userService;
+        this.customMetricsService = customMetricsService;
     }
 
-    @Observed(
-            name = "user.get",
-            contextualName = "getting-user-controller"
-    )
     @GetMapping("/{username}")
     public ResponseEntity<User> home(@PathVariable String username) {
         logger.info("Getting user: " + username);
+        customMetricsService.incrementCustomMetric();
         User user = userService.getUser(username);
         if (user == null) {
             return ResponseEntity.notFound().build();
@@ -38,6 +36,7 @@ public class UserController {
     @PostMapping("/{username}/{password}")
     public ResponseEntity<Void> create(@PathVariable String username, @PathVariable String password) {
         logger.info("Creating user: " + username);
+        customMetricsService.incrementCustomMetric();
         userService.createUser(username, password);
         return ResponseEntity.ok().build();
     }

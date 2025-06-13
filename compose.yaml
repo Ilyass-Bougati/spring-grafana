@@ -1,9 +1,80 @@
-version: '3.9'
+
+
 services:
-  jaeger:
-    image: jaegertracing/all-in-one:latest
+  loki:
+    image: grafana/loki:2.9.0
+    container_name: akira_loki
     ports:
-      - 4318:4318
-      - 16686:16686
+      - "3100:3100"
+    command: -config.expand-env=true -config.file=/etc/loki/config.yaml
+    volumes:
+      - ./loki/config.yaml:/etc/loki/config.yaml
+      - ./loki/data:/loki
+
+  prometheus:
+    image: prom/prometheus
+    container_name: akira_prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+    ports:
+      - 9090:9090
+    restart: unless-stopped
+    volumes:
+      - ./prometheus:/etc/prometheus
+      - prom_data:/prometheus
+
+  postgres:
+    image: postgres:15
+    container_name: akira_postgres_container
     environment:
-      - COLLECTOR_OTLP_ENABLED=true
+      POSTGRES_DB: telem
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: root
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  grafana:
+    image: grafana/grafana
+    container_name: akira_grafana
+    ports:
+      - 3000:3000
+    restart: unless-stopped
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=grafana
+    volumes:
+      - ./grafana:/etc/grafana/provisioning/datasources
+    depends_on:
+      - loki
+      - prometheus
+      - web-service
+
+
+  web-service:
+    container_name: akira_service
+    build:
+      context: .
+      target: builder
+    ports:
+      - '8080:8080'
+    environment:
+      SPRING_DATASOURCE_URL:  jdbc:postgresql://postgres:5432/telem
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: root
+    depends_on:
+      postgres:
+        condition : service_healthy
+    volumes:
+      - .:/code
+    hostname: web-service
+
+volumes:
+  prom_data:
+  pgdata:
