@@ -1,0 +1,37 @@
+spring:
+  application:
+    name: akira
+
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/telem}
+    username: ${SPRING_DATASOURCE_USERNAME:postgres}
+    password: ${SPRING_DATASOURCE_PASSWORD:root}
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+    show-sql: true
+    open-in-view: true
+
+management:
+  tracing:
+    sampling:
+      probability: 1.0
+
+  otlp:
+    tracing:
+      endpoint: http://localhost:4318/v1/traces
+
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+
+  endpoint:
+    health:
+      show-details: always
+
+logging:
+  pattern:
+    level: "%5p [${spring.application.name:},%X{traceId},%X{spanId}]"

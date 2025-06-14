@@ -5,11 +5,11 @@ distributor:
   receivers:
     otlp:
       protocols:
-        http:
         grpc:
-
+          endpoint: 0.0.0.0:4317
+        http:
+          endpoint: 0.0.0.0:4318
 ingester:
-  trace_idle_period: 10s
   max_block_duration: 5m
 
 compactor:
@@ -23,3 +23,6 @@ storage:
       path: /tmp/tempo/traces
     wal:
       path: /tmp/tempo/wal
+
+# Enable detailed logging for debugging
+target: all

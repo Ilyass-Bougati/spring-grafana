@@ -52,7 +52,7 @@ services:
     depends_on:
       - loki
       - prometheus
-      - web-service
+#      - web-service
 
   tempo:
     image: grafana/tempo
@@ -64,25 +64,26 @@ services:
     ports:
       - "3200:3200" # Tempo
       - "4317:4317" # OTLP
+      - "4318:4318" # HTTP
     hostname: tempo
 
-  web-service:
-    container_name: akira_service
-    build:
-      context: .
-      target: builder
-    ports:
-      - "8080:8080"
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/telem
-      SPRING_DATASOURCE_USERNAME: postgres
-      SPRING_DATASOURCE_PASSWORD: root
-    depends_on:
-      postgres:
-        condition: service_healthy
-    volumes:
-      - .:/code
-    hostname: web-service
+#  web-service:
+#    container_name: akira_service
+#    build:
+#      context: .
+#      target: builder
+#    ports:
+#      - "8080:8080"
+#    environment:
+#      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/telem
+#      SPRING_DATASOURCE_USERNAME: postgres
+#      SPRING_DATASOURCE_PASSWORD: root
+#    depends_on:
+#      postgres:
+#        condition: service_healthy
+#    volumes:
+#      - .:/code
+#    hostname: web-service
 
 volumes:
   prom_data:

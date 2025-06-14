@@ -67,26 +67,28 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/com.github.loki4j/loki-logback-appender -->
 		<dependency>
 			<groupId>com.github.loki4j</groupId>
 			<artifactId>loki-logback-appender</artifactId>
 			<version>1.5.1</version>
 		</dependency>
 		<dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-            <version>3.4.4</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-actuator</artifactId>
-            <version>3.4.4</version>
-        </dependency>
-		<!-- Micrometer Tracing for distributed tracing -->
-		<dependency>
 			<groupId>io.micrometer</groupId>
-			<artifactId>micrometer-tracing-bridge-brave</artifactId>
+			<artifactId>micrometer-tracing-bridge-otel</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.opentelemetry</groupId>
+			<artifactId>opentelemetry-sdk</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.opentelemetry</groupId>
+			<artifactId>opentelemetry-exporter-otlp</artifactId>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/io.opentelemetry.instrumentation/opentelemetry-instrumentation-annotations -->
+		<dependency>
+			<groupId>io.opentelemetry.instrumentation</groupId>
+			<artifactId>opentelemetry-instrumentation-annotations</artifactId>
+			<version>2.14.0</version>
 		</dependency>
 	</dependencies>
 
