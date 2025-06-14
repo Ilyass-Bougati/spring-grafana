@@ -4,7 +4,6 @@ datasources:
   - name: Prometheus
     type: prometheus
     url: http://prometheus:9090
-    isDefault: true
     access: proxy
     editable: true
 
@@ -17,8 +16,8 @@ datasources:
     version: 1
     editable: false
 
-  - name: Tempo
-    type: tempo
+  - name: Zipkin
+    type: zipkin
     access: proxy
-    url: http://tempo:3200
+    url: http://zipkin:9411
     editable: false

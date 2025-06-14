@@ -19,9 +19,9 @@ management:
     sampling:
       probability: 1.0
 
-  otlp:
-    tracing:
-      endpoint: http://localhost:4318/v1/traces
+#  otlp:
+#    tracing:
+#      endpoint: http://localhost:4318/v1/traces
 
   endpoints:
     web:
@@ -34,4 +34,6 @@ management:
 
 logging:
   pattern:
-    level: "%5p [${spring.application.name:},%X{traceId},%X{spanId}]"
+    level: "[${spring.application.name:},%X{traceId:-},%X{spanId:-}] "
+  level:
+    skybooker.akira.service: trace

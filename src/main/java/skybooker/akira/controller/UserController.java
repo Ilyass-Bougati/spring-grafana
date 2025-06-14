@@ -1,6 +1,6 @@
 package skybooker.akira.controller;
 
-import io.micrometer.observation.annotation.Observed;
+import io.micrometer.tracing.annotation.NewSpan;
 import io.opentelemetry.instrumentation.annotations.WithSpan;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,7 +25,7 @@ public class UserController {
     @GetMapping("/{username}")
     @WithSpan("get-user-controller")
     public ResponseEntity<User> home(@PathVariable String username) {
-        logger.info("Getting user: " + username);
+        logger.trace("Getting user: " + username);
         customMetricsService.incrementCustomMetric();
         User user = userService.getUser(username);
         if (user == null) {
@@ -36,9 +36,9 @@ public class UserController {
     }
 
     @PostMapping("/{username}/{password}")
-    @WithSpan("create-user-controller")
+    @NewSpan("test-span")
     public ResponseEntity<Void> create(@PathVariable String username, @PathVariable String password) {
-        logger.info("Creating user: " + username);
+        logger.trace("Creating user: " + username);
         customMetricsService.incrementCustomMetric();
         userService.createUser(username, password);
         return ResponseEntity.ok().build();

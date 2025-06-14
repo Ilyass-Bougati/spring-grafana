@@ -54,18 +54,24 @@ services:
       - prometheus
 #      - web-service
 
-  tempo:
-    image: grafana/tempo
-    container_name: tempo
-    command: ["-config.file=/etc/tempo.yaml"]
-    volumes:
-      - ./tempo/tempo.yml:/etc/tempo.yaml
-      - ./tempo/tempo-data:/tmp/tempo
+#  tempo:
+#    image: grafana/tempo
+#    container_name: tempo
+#    command: ["-config.file=/etc/tempo.yaml"]
+#    volumes:
+#      - ./tempo/tempo.yml:/etc/tempo.yaml
+#      - ./tempo/tempo-data:/tmp/tempo
+#    ports:
+#      - "3200:3200" # Tempo
+#      - "4317:4317" # OTLP
+#      - "4318:4318" # HTTP
+#    hostname: tempo
+
+  zipkin:
+    image: openzipkin/zipkin
+    container_name: zipkin
     ports:
-      - "3200:3200" # Tempo
-      - "4317:4317" # OTLP
-      - "4318:4318" # HTTP
-    hostname: tempo
+      - 9411:9411
 
 #  web-service:
 #    container_name: akira_service
