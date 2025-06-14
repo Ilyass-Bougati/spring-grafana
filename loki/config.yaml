@@ -20,6 +20,7 @@ frontend:
   max_outstanding_per_tenant: 2048
 
 limits_config:
+  # structured_metadata: true
   max_global_streams_per_user: 0
   ingestion_rate_mb: 50000
   ingestion_burst_size_mb: 50000
@@ -41,7 +42,6 @@ schema_config:
       index:
         prefix: index_
         period: 24h
-
 
 analytics:
   reporting_enabled: false
