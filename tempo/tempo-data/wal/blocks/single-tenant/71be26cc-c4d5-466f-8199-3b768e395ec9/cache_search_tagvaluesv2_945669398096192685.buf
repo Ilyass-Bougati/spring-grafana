@@ -1,0 +1,11 @@
+
+
+stringhttp get /**
+'
+stringhttp get /actuator/prometheus
+.
+string$http post /user/email/{id}/{content}
+
+stringhttp post /**
+)
+stringhttp post /email/{id}/{content}

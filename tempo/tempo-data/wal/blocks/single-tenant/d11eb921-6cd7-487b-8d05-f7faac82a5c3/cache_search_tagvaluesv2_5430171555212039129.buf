@@ -1,7 +1,0 @@
-
-/
-string%http post /user/{username}/{password}
-'
-stringhttp get /actuator/prometheus
-#
-stringhttp get /user/{username}
