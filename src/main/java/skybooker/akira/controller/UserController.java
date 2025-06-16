@@ -1,6 +1,8 @@
 package skybooker.akira.controller;
 
 import io.micrometer.tracing.annotation.NewSpan;
+import io.opentelemetry.api.trace.Span;
+import io.opentelemetry.api.trace.Tracer;
 import io.opentelemetry.instrumentation.annotations.WithSpan;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,6 +11,8 @@ import org.springframework.web.bind.annotation.*;
 import skybooker.akira.entity.User;
 import skybooker.akira.service.CustomMetricsService;
 import skybooker.akira.service.UserService;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/user")
@@ -23,22 +27,15 @@ public class UserController {
     }
 
     @GetMapping("/{username}")
-    @WithSpan("get-user-controller")
-    public ResponseEntity<User> home(@PathVariable String username) {
-        logger.trace("Getting user: " + username);
+    @NewSpan("get-user-span")
+    public ResponseEntity<List<User>> home(@PathVariable String username) {
         customMetricsService.incrementCustomMetric();
-        User user = userService.getUser(username);
-        if (user == null) {
-            return ResponseEntity.notFound().build();
-        } else {
-            return ResponseEntity.ok(user);
-        }
+        return ResponseEntity.ok(userService.getUser(username));
     }
 
     @PostMapping("/{username}/{password}")
-    @NewSpan("test-span")
+    @WithSpan("create-user-span")
     public ResponseEntity<Void> create(@PathVariable String username, @PathVariable String password) {
-        logger.trace("Creating user: " + username);
         customMetricsService.incrementCustomMetric();
         userService.createUser(username, password);
         return ResponseEntity.ok().build();

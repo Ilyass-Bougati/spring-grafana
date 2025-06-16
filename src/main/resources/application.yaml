@@ -14,26 +14,39 @@ spring:
     show-sql: true
     open-in-view: true
 
+
 management:
   tracing:
     sampling:
       probability: 1.0
 
-#  otlp:
-#    tracing:
-#      endpoint: http://localhost:4318/v1/traces
+  otlp:
+    tracing:
+      endpoint: http://localhost:4318/v1/traces
+    metrics:
+      export:
+        enabled: false
 
   endpoints:
     web:
       exposure:
         include: health,info,metrics,prometheus
-
-  endpoint:
-    health:
-      show-details: always
+#
+#  endpoint:
+#    health:
+#      show-details: always
 
 logging:
   pattern:
     level: "[${spring.application.name:},%X{traceId:-},%X{spanId:-}] "
   level:
     skybooker.akira.service: trace
+
+
+#otel:
+#  traces:
+#    exporter: otlp
+#  exporter:
+#    otlp:
+#      endpoint: http://localhost:4318
+#      protocol: http/protobuf

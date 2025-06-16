@@ -16,8 +16,18 @@ datasources:
     version: 1
     editable: false
 
-  - name: Zipkin
-    type: zipkin
+#  - name: Zipkin
+#    type: zipkin
+#    access: proxy
+#    url: http://zipkin:9411
+#    editable: false
+
+  - name: Tempo
+    type: tempo
     access: proxy
-    url: http://zipkin:9411
+    url: http://tempo:3200
     editable: false
+    jsonData:
+      httpMethod: GET
+      serviceMap:
+        datasourceUid: 'prometheus'

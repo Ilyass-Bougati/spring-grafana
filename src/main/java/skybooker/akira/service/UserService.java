@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 import skybooker.akira.entity.User;
 import skybooker.akira.repository.UserRepository;
 
+import java.util.List;
+
 @Service
 public class UserService {
 
@@ -16,10 +18,9 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public User getUser(String username) {
+    public List<User> getUser(String username) {
         logger.trace("Getting user: " + username);
-        return userRepository.findByUsername(username)
-                .orElse(null);
+        return userRepository.findByUsername(username);
     }
 
     public void createUser(String username, String password) {

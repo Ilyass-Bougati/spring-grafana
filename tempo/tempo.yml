@@ -24,5 +24,12 @@ storage:
     wal:
       path: /tmp/tempo/wal
 
+
+metrics_generator:
+  storage:
+    path: /var/tempo/storage
+  traces_storage:
+    path: /var/tempo/traces_storage
+
 # Enable detailed logging for debugging
 target: all
