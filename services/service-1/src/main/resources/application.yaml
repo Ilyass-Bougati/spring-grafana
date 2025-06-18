@@ -15,6 +15,7 @@ spring:
     open-in-view: true
 
 
+
 management:
   tracing:
     sampling:
@@ -26,14 +27,25 @@ management:
     metrics:
       export:
         enabled: false
+    logging:
+      export:
+        enabled: false
 
   endpoints:
     web:
       exposure:
         include: health,info,metrics,prometheus
 
+
 logging:
   pattern:
     level: "[${spring.application.name:},%X{traceId:-},%X{spanId:-}] "
   level:
     skybooker.akira.service: trace
+
+
+otel:
+  metrics:
+    exporter: none
+  logs:
+    exporter: none

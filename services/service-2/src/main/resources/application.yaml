@@ -26,6 +26,9 @@ management:
     metrics:
       export:
         enabled: false
+    logging:
+      export:
+        enabled: false
 
   endpoints:
     web:
@@ -41,3 +44,9 @@ logging:
 
 server:
   port: 8081
+
+otel:
+  metrics:
+    exporter: none
+  logs:
+    exporter: none
