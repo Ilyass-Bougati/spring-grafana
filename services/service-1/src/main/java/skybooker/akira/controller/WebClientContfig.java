@@ -9,6 +9,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 public class WebClientContfig {
     @Bean
     public WebClient webClient(OpenTelemetry openTelemetry) {
-        return WebClient.builder().build();
+        return WebClient.builder()
+                .build();
     }
 }

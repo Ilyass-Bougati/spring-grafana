@@ -31,6 +31,7 @@ public class EmailController {
     @PostMapping("/{id}/{content}")
     public ResponseEntity<Void> create(@PathVariable Long id, @PathVariable String content) {
         customMetricsService.incrementCustomMetric();
+        logger.info("Email created");
         userService.createEmail(id, content);
         return ResponseEntity.ok().build();
     }

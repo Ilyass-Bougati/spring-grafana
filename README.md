@@ -9,6 +9,7 @@ The whole Collection and visualization layer is put together through [Docker com
 ```bash
 docker compose up
 ```
+then you should run each service individually
 
 # The project so far
 Note that I still can't access the Zipkin data from Grafana. And that I only have one service so fat in the project
@@ -24,7 +25,6 @@ For the logs we're using Grafana Loki, we collet them in a loki instance then vi
 ![img](img/loki.png)
 
 ## The traces
-The trickiest part and the one I'm not satisfied with yet. I'm exporting the data directly to a Zipkin instance
+We're using Tempo as traces collector
 
-![img](img/zipkin.png)
-![img](img/zipkin-request.png)
+![img](img/traces.png)

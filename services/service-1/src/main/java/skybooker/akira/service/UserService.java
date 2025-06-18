@@ -36,6 +36,9 @@ public class UserService {
 
     public void createEmail(Long id, String content) {
         webClient.post()
-                .uri("http://localhost:8081/email/"+id+"/"+content);
+                .uri("http://localhost:8081/email/"+id+"/"+content)
+                .retrieve()
+                .toBodilessEntity()
+                .subscribe();
     }
 }

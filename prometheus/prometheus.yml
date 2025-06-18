@@ -19,5 +19,5 @@ scrape_configs:
     metrics_path: /actuator/prometheus
     scheme: http
     static_configs:
-#      - targets: ['172.17.0.1:8080', '172.17.0.1:8081'] # for linux
-      - targets: ['host.docker.internal:8080', 'host.docker.internal:8081'] # for docker desktop
+     - targets: ['172.17.0.1:8080', '172.17.0.1:8081'] # for linux
+      # - targets: ['host.docker.internal:8080', 'host.docker.internal:8081'] # for docker desktop

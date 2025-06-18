@@ -67,30 +67,6 @@ services:
       - "4318:4318" # HTTP
     hostname: tempo
 
-#  zipkin:
-#    image: openzipkin/zipkin
-#    container_name: zipkin
-#    ports:
-#      - 9411:9411
-
-#  web-service:
-#    container_name: akira_service
-#    build:
-#      context: .
-#      target: builder
-#    ports:
-#      - "8080:8080"
-#    environment:
-#      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/telem
-#      SPRING_DATASOURCE_USERNAME: postgres
-#      SPRING_DATASOURCE_PASSWORD: root
-#    depends_on:
-#      postgres:
-#        condition: service_healthy
-#    volumes:
-#      - .:/code
-#    hostname: web-service
-
 volumes:
   prom_data:
   pgdata:
