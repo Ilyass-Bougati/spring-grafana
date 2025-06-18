@@ -32,10 +32,6 @@ management:
       exposure:
         include: health,info,metrics,prometheus
 
-#
-#  endpoint:
-#    health:
-#      show-details: always
 
 logging:
   pattern:
@@ -43,13 +39,5 @@ logging:
   level:
     skybooker.akira.service: trace
 
-
-#otel:
-#  traces:
-#    exporter: otlp
-#  exporter:
-#    otlp:
-#      endpoint: http://localhost:4318
 server:
   port: 8081
-#      protocol: http/protobuf
