@@ -12,7 +12,7 @@ alerting:
       api_version: v2
 
 scrape_configs:
-  - job_name: prometheus
+  - job_name: services
     honor_timestamps: true
     scrape_interval: 15s
     scrape_timeout: 10s
@@ -21,3 +21,13 @@ scrape_configs:
     static_configs:
      - targets: ['172.17.0.1:8080', '172.17.0.1:8081'] # for linux
       # - targets: ['host.docker.internal:8080', 'host.docker.internal:8081'] # for docker desktop
+
+  - job_name: traces
+    honor_timestamps: true
+    scrape_interval: 15s
+    scrape_timeout: 10s
+    metrics_path: /metrics
+    scheme: http
+    static_configs:
+     - targets: ['tempo:3200'] # for linux
+      # - targets: ['tempo:9090'] # for docker desktop
