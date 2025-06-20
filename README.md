@@ -9,22 +9,25 @@ The whole Collection and visualization layer is put together through [Docker com
 ```bash
 docker compose up
 ```
-then you should run each service individually
+Then the Grafana interface will be accessible from `http://localhost:3000/`. For the services, each one should be run individually, by first entering the `services` directory and running the PostgreSQL docker container using the `docker compose up` command. Then, for each of the two services, we just enter the directory of the service and run the command
+```bash
+./mvnw spring-boot:run
+```
 
 # The project so far
-Note that I still can't access the Zipkin data from Grafana. And that I only have one service so fat in the project
+Note that I still can't access the Zipkin data from Grafana. And that I only have one service so far in the project
 
 ## The metrics
-The metrics data is collected to a prometheus database, then read by Grafana, where we can create dashboards from it
+The metrics data is collected into a Prometheus database, then read by Grafana, where we can create dashboards from it
 
 ![img](img/metrics.png)
 
 ## The logs
-For the logs we're using Grafana Loki, we collet them in a loki instance then visualize them using Grafana
+For the logs we're using Grafana Loki, we collect them in a Loki instance, then visualize them using Grafana
 
 ![img](img/loki.png)
 
 ## The traces
-We're using Tempo as traces collector
+We're using Tempo as a traces collector
 
 ![img](img/traces.png)
