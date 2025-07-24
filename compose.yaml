@@ -14,6 +14,7 @@ services:
     container_name: akira_prometheus
     command:
       - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--web.enable-remote-write-receiver"
     ports:
       - 9090:9090
     restart: unless-stopped
