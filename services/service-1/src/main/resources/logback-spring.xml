@@ -18,7 +18,8 @@
         </http>
         <format>
             <label>
-                app=akira
+                <pattern>app=service-1, service_name=service-1, level=%level</pattern>
+                <readMarkers>true</readMarkers>
             </label>
             <message>
                 <pattern>
